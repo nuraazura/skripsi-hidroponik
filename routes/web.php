@@ -1,0 +1,79 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
+
+Route::get('/', function () {
+    return redirect()->route('login');
+    return view('welcome');
+});
+
+Auth::routes([
+    'register' => false,
+]);
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+//Admin
+Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'auth'], function () {
+    Route::get('/beranda','BerandaController@index')->name('admin.beranda.index');
+
+    //menajemen user
+        Route::get('/manajemen_user','ManajemenUserController@index')->name('admin.manajemen_user.index');
+        Route::get('/manajemen_user/tambah_user','ManajemenUserController@tambahUser')->name('admin.manajemen_user.tambah_user');
+        Route::post('/manajemen_user/store','ManajemenUserController@store')->name('admin.manajemen_user.store');
+        Route::post('/manajemen_user/destroy/{id}','ManajemenUserController@destroy')->name('admin.manajemen_user.destroy');
+        Route::get('/manajemen_user/edit/{id}','ManajemenUserController@edit')->name('admin.manajemen_user.edit');
+        Route::post('/manajemen_user/update/{id}','ManajemenUserController@update')->name('admin.manajemen_user.update');
+    
+    //manajemen alat
+        Route::get('manajemen_alat/get_kode', 'ManajemenAlatController@get_kode')->name('get_kode_alat');
+        Route::get('manajemen_alat/{user_id}', 'ManajemenAlatController@index')->name('admin.manajemen_alat.index');
+        Route::post('manajemen_alat/{user_id}/store', 'ManajemenAlatController@store')->name('admin.manajemen_alat.store');
+        Route::post('manajemen_alat/{alat_id}/destroy', 'ManajemenAlatController@destroy')->name('admin.manajemen_alat.destroy');
+        // Route::get('manajemen_alat/get_kode', 'ManajemenAlatController@get_kode');
+
+    // monitoring
+        Route::get('/monitoring','MonitoringController@index')->name('admin.monitoring.index');
+        Route::get('monitoring/daftar-alat/{user_id}','MonitoringController@daftarAlat')->name('admin.monitoring.daftar_alat');
+        Route::get('/log-monitoring/{kode_alat}','MonitoringController@log')->name('admin.monitoring.log_monitoring');
+        Route::get('/log-monitoring/get-data/{kode_alat}', 'MonitoringController@get_data')->name('admin.monitoring.log_monitoring.get-data');
+    // profil
+        Route::get('profil','ProfilController@index')->name('admin.profil.index');
+        Route::get('edit-profil/{id}','ProfilController@edit')->name('admin.profil.edit');
+        Route::post('update-profil/{id}','ProfilController@update')->name('admin.profil.update');
+    });
+
+    
+//petani
+    Route::group(['prefix' => 'petani', 'namespace' => 'Petani', 'middleware' => 'auth'], function () {
+        Route::get('/beranda','BerandaController@index')->name('petani.beranda.index');
+        //monitoring
+        Route::get('/monitoring','MonitoringController@index')->name('petani.monitoring.index');
+        Route::get('/log-monitoring/{kode_alat}','MonitoringController@log')->name('petani.monitoring.log_monitoring');
+        Route::get('/log-monitoring/get-data/{kode_alat}', 'MonitoringController@get_data')->name('petani.monitoring.log_monitoring.get-data');
+
+        //kendali
+        Route::get('/kendali','ManajemenAlatController@index')->name('petani.kendali.index');
+        Route::get('/kendali/{kode_alat}','ManajemenAlatController@atur_tanaman')->name('petani.kendali.atur_tanaman');
+        Route::post('/kendali/{id_alat}', 'ManajemenAlatController@update')->name('petani.kendali.atur_tanaman.atur');
+        Route::get('/kendali/edit/','AlatController@edit')->name('petani.kendali.edit');
+        
+        //profil
+        Route::get('profil','ProfilController@index')->name('petani.profil.index');
+        Route::get('edit-profil/{id}','ProfilController@edit')->name('petani.profil.edit');
+        Route::post('update-profil/{id}', 'ProfilController@update')->name('petani.update-profil');
+// Route::get('kirim-data/{kodeAlat}','KirimDataController@cekData');
+
+    });

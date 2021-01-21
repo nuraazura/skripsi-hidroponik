@@ -26,7 +26,7 @@ Auth::routes([
 Route::get('/home', 'HomeController@index')->name('home');
 
 //Admin
-Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'auth'], function () {
+Route::group(['prefix' => 'admin', 'namespace' => 'admin', 'middleware' => 'auth'], function () {
     Route::get('/beranda','BerandaController@index')->name('admin.beranda.index');
 
     //menajemen user

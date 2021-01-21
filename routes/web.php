@@ -57,7 +57,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin', 'middleware' => 'auth
 
     
 //petani
-    Route::group(['prefix' => 'petani', 'namespace' => 'Petani', 'middleware' => 'auth'], function () {
+    Route::group(['prefix' => 'petani', 'namespace' => 'petani', 'middleware' => 'auth'], function () {
         Route::get('/beranda','BerandaController@index')->name('petani.beranda.index');
         //monitoring
         Route::get('/monitoring','MonitoringController@index')->name('petani.monitoring.index');

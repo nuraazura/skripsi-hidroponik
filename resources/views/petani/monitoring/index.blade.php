@@ -115,11 +115,11 @@
 @push('script')
 <script>
   const userId = $('#user_id').val()
+
   var url = "{{ url('/api/get-data') }}"
 
   setInterval(() => {
     $.getJSON(url+ '/' +userId, function (d) {
-      // console.log('data', d)
       d.forEach(item => {
         $('#suhuUdara_'+item.kode_alat).html(item.suhu_udara+ ' C')
         $('#kelembapanRockwool_'+item.kode_alat).html(item.kelembapan_air+ ' %')

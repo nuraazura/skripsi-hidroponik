@@ -47,7 +47,7 @@ class MonitoringController extends Controller
                 return $data->alat->nama_tanaman;
             })
             ->addColumn('usia_tanaman', function($data){
-                return Helpers::dateDiff($data->created_at). ' Hari';
+                return Helpers::dateDiffLogMonitoring($data->alat->created_at, $data->created_at). ' Hari';
             })
             ->addColumn('waktu_pembacaan', function($data){
                 return $data->created_at->format('d M Y H:i');

@@ -23,6 +23,20 @@ class Helpers
         
     }
 
+    public static function dateDiffLogMonitoring($startDate, $endDate)
+    {
+        if ($startDate) {
+            $now = $endDate;
+            $start = strtotime(date('d-m-Y', strtotime($startDate)));
+            $diff = strtotime($now) - $start;
+    
+            return abs(round($diff / 86400));
+        } else {
+            return '0';
+        }
+        
+    }
+
     public static function statusKontrol($status)
     {
         if ($status == 1) {

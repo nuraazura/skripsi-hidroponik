@@ -100,7 +100,7 @@ class MonitoringController extends Controller
         $mulai = $request->tanggal_mulai;
         $akhir = $request->tanggal_akhir;
 
-        $data = LogMonitoring::where('kode_alat', $kode_alat);
+        $data = LogMonitoring::where('kode_alat', $kode_alat)->orderBy('id', 'DESC');
         
         if ($mulai != null && $akhir != null) {
             $data->whereBetween('created_at', [date('Y-m-d 00:00:00', strtotime($mulai)), date('Y-m-d 23:59:59', strtotime($akhir))]);
@@ -112,7 +112,7 @@ class MonitoringController extends Controller
                 return $data->alat->nama_tanaman;
             })
             ->addColumn('usia_tanaman', function($data){
-                return Helpers::dateDiff($data->created_at). ' Hari';
+                return Helpers::dateDiffLogMonitoring($data->alat->created_at, $data->created_at). ' Hari';
             })
             ->addColumn('waktu_pembacaan', function($data){
                 return $data->created_at->format('d M Y H:i');

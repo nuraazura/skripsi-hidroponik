@@ -35,7 +35,7 @@ class MonitoringController extends Controller
         $mulai = $request->tanggal_mulai;
         $akhir = $request->tanggal_akhir;
 
-        $data = LogMonitoring::where('kode_alat', $kode_alat);
+        $data = LogMonitoring::where('kode_alat', $kode_alat)->orderBy('id', 'DESC');
 
         if ($mulai != null && $akhir != null) {
         $data->whereBetween('created_at', [date('Y-m-d 00:00:00', strtotime($mulai)), date('Y-m-d 23:59:59', strtotime($akhir))]);

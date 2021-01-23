@@ -115,7 +115,7 @@ class MonitoringController extends Controller
                 return Helpers::dateDiffLogMonitoring($data->alat->created_at, $data->created_at). ' Hari';
             })
             ->addColumn('waktu_pembacaan', function($data){
-                return $data->created_at->format('d M Y H:i');
+                return $data->created_at->format('d M Y H:i:s');
             })
             ->editColumn('kelembapan_air', function($data){
                 return $data->kelembapan_air. ' %';

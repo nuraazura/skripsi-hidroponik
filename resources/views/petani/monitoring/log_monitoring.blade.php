@@ -44,7 +44,7 @@
                       <th>Nutrisi Air</th>
                       <th>Status Pompa Siram</th>
                       <th>Status Kipas</th>
-                      <th>Status Heater</th>
+                      {{-- <th>Status Heater</th> --}}
                       <th>Status Pompa Nutrisi</th>
                       <th>Status Lampu Led</th>
                     </tr>
@@ -89,7 +89,7 @@
       { data: 'nutrisi_air', name: 'nutrisi_air' },
       { data: 'pompa_siram', name: 'pompa_siram' },
       { data: 'kipas_pendingin', name: 'kipas_pendingin' },
-      { data: 'kipas_pemanas', name: 'kipas_pemanas' },
+      // { data: 'kipas_pemanas', name: 'kipas_pemanas' },
       { data: 'pompa_nutrisi', name: 'pompa_nutrisi' },
       { data: 'lampu_led', name: 'lampu_led' },
     ]

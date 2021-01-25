@@ -59,4 +59,19 @@ class KendaliController extends Controller
         $status = Kontrol::where('kode_alat', $kodeAlat)->first()->pompa_air;
         return response()->json($status, 200);
     }
+
+    public function statusKontrol($kodeAlat)
+    {
+        $data = Kontrol::where('kode_alat', $kodeAlat)->first();
+
+        $statusKipasPendingin   = $data->kipas_pendingin;
+        $statusPompaNutrisi     = $data->pompa_nutrisi;
+        $statusPompaAir         = $data->pompa_air;
+        $statusPompaSiram       = $data->pompa_siram;
+        $statusLampuLed         = $data->lampu_led;
+
+        $status = $statusKipasPendingin.'.'.$statusPompaNutrisi.'.'.$statusPompaAir.'.'.$statusPompaSiram.'.'.$statusLampuLed;
+
+        return response()->json($status, 200);
+    }
 }

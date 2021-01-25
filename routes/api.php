@@ -28,6 +28,7 @@ Route::get('get-status/led/{kodeAlat}', 'KendaliController@led');
 Route::get('get-status/pompa-siram/{kodeAlat}', 'KendaliController@pompaSiram');
 Route::get('get-status/pompa-nutrisi/{kodeAlat}', 'KendaliController@pompaNutrisi');
 Route::get('get-status/pompa-air/{kodeAlat}', 'KendaliController@pompaAir');
+Route::get('get-status/kontrol/{kodeAlat}', 'KendaliController@statusKontrol');
 
 // Route::get('log-monitoring/{kodeAlat}/{kelembapan}/{nutrisi}/{suhu}', 'KirimDataController@inputLog');
 Route::get('log-monitoring/{kode_alat_id}/{suhu_udara}/{kelembapan}/{nutrisi}','MonitoringAlatController@logMonitoring');

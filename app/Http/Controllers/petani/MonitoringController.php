@@ -5,11 +5,13 @@ namespace App\Http\Controllers\petani;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
+use DB;
 use App\User;
 use Auth;
 use App\LogMonitoring;
 use App\Helpers;
 use App\Alat;
+use Carbon\Carbon;
 
 class MonitoringController extends Controller
 {
@@ -35,7 +37,16 @@ class MonitoringController extends Controller
         $mulai = $request->tanggal_mulai;
         $akhir = $request->tanggal_akhir;
 
-        $data = LogMonitoring::where('kode_alat', $kode_alat)->orderBy('id', 'DESC');
+        $data = LogMonitoring::where('kode_alat', $kode_alat)
+                        ->orderBy('id', 'DESC');
+        // return Carbon::now()->subDay();
+        // return $data = DB::table('log_monitoring')
+        //             // ->where('created_at', '>=', Carbon::now()->subDay())
+        //             ->limit(1000)
+        //             ->get()
+        //             ->groupBy(function ($data) {
+        //                 return Carbon::parse($data->created_at)->format('h');
+        //             });
 
         if ($mulai != null && $akhir != null) {
         $data->whereBetween('created_at', [date('Y-m-d 00:00:00', strtotime($mulai)), date('Y-m-d 23:59:59', strtotime($akhir))]);

@@ -18,19 +18,19 @@
                 </div>
                 <div class="card-body">
                   <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="">Tanggal Mulai</label>
-                        <input type="date" name="tanggal_mulai" id="tanggal-mulai" class="form-control" placeholder="" aria-describedby="helpId">
+                    <div class="col-md-12">
+                      <div class="form-group row mb-0">
+                          <label class="col-md-3 col-form-label" style="margin-right: -5%;">Pilih Rentang Waktu Mulai</label>
+                          <div class="col-md-3">
+                              <input type="date" name="tanggal_mulai" id="tanggal-mulai" class="form-control" placeholder="" aria-describedby="helpId">
+                          </div>
+                          
+                          <label class="col-md-1 col-form-label text-center" style="margin-right: -23px; margin-left: -23px;">s/d</label>
+                          <div class="col-md-3">
+                              <input type="date" name="tanggal_akhir" id="tanggal-akhir" class="form-control" placeholder="" aria-describedby="helpId">
+                          </div>
                       </div>
                     </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="">Tanggal Akhir</label>
-                        <input type="date" name="tanggal_akhir" id="tanggal-akhir" class="form-control" placeholder="" aria-describedby="helpId">
-                      </div>
-                    </div>
-                  </div>
                   <div class="table-responsive p-3">
                     <table class="table align-items-center table-flush" id="dataTableMonitoring">
                       <thead class="thead-light">

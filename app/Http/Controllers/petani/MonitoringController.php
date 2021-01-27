@@ -37,14 +37,28 @@ class MonitoringController extends Controller
         $mulai = $request->tanggal_mulai;
         $akhir = $request->tanggal_akhir;
 
-        // $data = LogMonitoring::where('kode_alat', $kode_alat)
-        //                 ->orderBy('id', 'DESC');
-        $data = DB::select('SELECT * 
-        FROM log_monitoring 
-        WHERE created_at IN ( SELECT MIN(created_at) AS created_at
-                      FROM log_monitoring
-                      GROUP BY DATE_FORMAT(created_at,"%Y-%m-%d %H:%i:00") + 
-                     INTERVAL (MINUTE(created_at) - MINUTE(created_at) MOD 1) MINUTE )');                
+        // return $data = LogMonitoring::where('kode_alat', $kode_alat)
+        //                 // ->where('created_at', '<', DB::raw('NOW() + INTERVAL 15 SECOND)'))
+        //                 ->where('created_at', '>=', Carbon::now()->subDay())->get()->groupBy(function($date){
+        //                     return Carbon::parse($date->created_at)->format('h');
+        //                 });
+                        // ->orderBy('id', 'DESC');
+
+        // return $data = DB::select('SELECT * 
+        // FROM log_monitoring 
+        // WHERE kode_alat = "'.$kode_alat.'" AND
+        // created_at IN ( SELECT MIN(created_at) AS created_at
+        //               FROM log_monitoring
+        //               GROUP BY DATE_FORMAT(created_at,"%Y-%m-%d %H:%i:00") + 
+        //              INTERVAL (MINUTE(created_at) - MINUTE(created_at) MOD 1) MINUTE )');
+
+        // return $data = DB::table('log_monitoring')->select([
+        //     'log_monitoring.*',
+        //     DB::raw('created_at IN ( SELECT MIN(created_at) AS created_at
+        //     FROM log_monitoring
+        //     GROUP BY DATE_FORMAT(created_at,"%Y-%m-%d %H:%i:00") + INTERVAL (MINUTE(created_at) - MINUTE(created_at) MOD 1) MINUTE )')
+        // ])->get();   
+
         // return Carbon::now()->subDay();
         // return $data = DB::table('log_monitoring')
         //             // ->where('created_at', '>=', Carbon::now()->subDay())
@@ -55,7 +69,23 @@ class MonitoringController extends Controller
         //             });
 
         if ($mulai != null && $akhir != null) {
-            $data->whereBetween('created_at', [date('Y-m-d 00:00:00', strtotime($mulai)), date('Y-m-d 23:59:59', strtotime($akhir))]);
+            $data = DB::select('SELECT * 
+            FROM log_monitoring 
+            WHERE kode_alat = "'.$kode_alat.'" AND
+            created_at >= "'.date('Y-m-d 00:00:00', strtotime($mulai)).'" AND
+            created_at <= "'.date('Y-m-d 00:00:00', strtotime($akhir.' +1 day')).'" AND
+            created_at IN ( SELECT MIN(created_at) AS created_at
+                          FROM log_monitoring
+                          GROUP BY DATE_FORMAT(created_at,"%Y-%m-%d %H:%i:00") + 
+                         INTERVAL (MINUTE(created_at) - MINUTE(created_at) MOD 1) MINUTE ) ORDER BY id DESC');
+        } else {
+            $data = DB::select('SELECT * 
+            FROM log_monitoring 
+            WHERE kode_alat = "'.$kode_alat.'" AND
+            created_at IN ( SELECT MIN(created_at) AS created_at
+                          FROM log_monitoring
+                          GROUP BY DATE_FORMAT(created_at,"%Y-%m-%d %H:%i:00") + 
+                         INTERVAL (MINUTE(created_at) - MINUTE(created_at) MOD 1) MINUTE ) ORDER BY id DESC');
         }
 
         return Datatables::of($data)

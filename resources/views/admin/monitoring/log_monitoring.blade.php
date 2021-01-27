@@ -44,7 +44,7 @@
                           <th>Nutrisi Air</th>
                           <th>Status Pompa Siram</th>
                           <th>Status Kipas</th>
-                          <th>Status Heater</th>
+                          {{-- <th>Status Heater</th> --}}
                           <th>Status Pompa Nutrisi</th>
                           <th>Status Lampu Led</th>
                         </tr>
@@ -83,17 +83,17 @@
     },
     columns: [
       // { data: 'rownum', name: 'rownum' },
-      { data: 'nama_tanaman', name: 'nama_tanaman' },
-      { data: 'usia_tanaman', name: 'usia_tanaman' },
-      { data: 'waktu_pembacaan', name: 'waktu_pembacaan' },
-      { data: 'kelembapan_air', name: 'kelembapan_air' },
-      { data: 'suhu_ruangan', name: 'suhu_ruangan' },
-      { data: 'nutrisi_air', name: 'nutrisi_air' },
-      { data: 'pompa_siram', name: 'pompa_siram' },
-      { data: 'kipas_pendingin', name: 'kipas_pendingin' },
-      { data: 'kipas_pemanas', name: 'kipas_pemanas' },
-      { data: 'pompa_nutrisi', name: 'pompa_nutrisi' },
-      { data: 'lampu_led', name: 'lampu_led' },
+      { data: 'nama_tanaman', name: 'nama_tanaman', orderable: false },
+      { data: 'usia_tanaman', name: 'usia_tanaman', orderable: false },
+      { data: 'waktu_pembacaan', name: 'waktu_pembacaan', orderable: false },
+      { data: 'kelembapan_air', name: 'kelembapan_air', orderable: false },
+      { data: 'suhu_ruangan', name: 'suhu_ruangan', orderable: false },
+      { data: 'nutrisi_air', name: 'nutrisi_air', orderable: false },
+      { data: 'pompa_siram', name: 'pompa_siram', orderable: false },
+      { data: 'kipas_pendingin', name: 'kipas_pendingin', orderable: false },
+      // { data: 'kipas_pemanas', name: 'kipas_pemanas', orderable: false },
+      { data: 'pompa_nutrisi', name: 'pompa_nutrisi', orderable: false },
+      { data: 'lampu_led', name: 'lampu_led', orderable: false },
     ]
   })
 

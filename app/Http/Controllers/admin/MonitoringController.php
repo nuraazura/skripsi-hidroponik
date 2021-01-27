@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use Yajra\Datatables\Datatables;
 use Illuminate\Http\Request;
+use DB;
 use App\Helpers;
 use App\user;
 use App\alat;
@@ -100,22 +101,44 @@ class MonitoringController extends Controller
         $mulai = $request->tanggal_mulai;
         $akhir = $request->tanggal_akhir;
 
-        $data = LogMonitoring::where('kode_alat', $kode_alat)->orderBy('id', 'DESC');
-        
+        // $data = LogMonitoring::where('kode_alat', $kode_alat)->orderBy('id', 'DESC');
+
         if ($mulai != null && $akhir != null) {
-            $data->whereBetween('created_at', [date('Y-m-d 00:00:00', strtotime($mulai)), date('Y-m-d 23:59:59', strtotime($akhir))]);
+            $data = DB::select('SELECT * 
+            FROM log_monitoring 
+            WHERE kode_alat = "'.$kode_alat.'" AND
+            created_at >= "'.date('Y-m-d 00:00:00', strtotime($mulai)).'" AND
+            created_at <= "'.date('Y-m-d 00:00:00', strtotime($akhir.' +1 day')).'" AND
+            created_at IN ( SELECT MIN(created_at) AS created_at
+                          FROM log_monitoring
+                          GROUP BY DATE_FORMAT(created_at,"%Y-%m-%d %H:%i:00") + 
+                         INTERVAL (MINUTE(created_at) - MINUTE(created_at) MOD 1) MINUTE ) ORDER BY id DESC');
+        } else {
+            $data = DB::select('SELECT * 
+            FROM log_monitoring 
+            WHERE kode_alat = "'.$kode_alat.'" AND
+            created_at IN ( SELECT MIN(created_at) AS created_at
+                          FROM log_monitoring
+                          GROUP BY DATE_FORMAT(created_at,"%Y-%m-%d %H:%i:00") + 
+                         INTERVAL (MINUTE(created_at) - MINUTE(created_at) MOD 1) MINUTE ) ORDER BY id DESC');
         }
+        
+        // if ($mulai != null && $akhir != null) {
+        //     $data->whereBetween('created_at', [date('Y-m-d 00:00:00', strtotime($mulai)), date('Y-m-d 23:59:59', strtotime($akhir))]);
+        // }
 
         return Datatables::of($data)
             ->addIndexColumn()
             ->addColumn('nama_tanaman', function($data){
-                return $data->alat->nama_tanaman;
+                $alat = Alat::where('kode_alat', $data->kode_alat)->first();
+                return $alat->nama_tanaman;
             })
             ->addColumn('usia_tanaman', function($data){
-                return Helpers::dateDiffLogMonitoring($data->alat->created_at, $data->created_at). ' Hari';
+                $alat = Alat::where('kode_alat', $data->kode_alat)->first();
+                return Helpers::dateDiffLogMonitoring($alat->created_at, $data->created_at). ' Hari';
             })
             ->addColumn('waktu_pembacaan', function($data){
-                return $data->created_at->format('d M Y H:i:s');
+                return date('d M Y H:i:s', strtotime($data->created_at));
             })
             ->editColumn('kelembapan_air', function($data){
                 return $data->kelembapan_air. ' %';
@@ -140,13 +163,13 @@ class MonitoringController extends Controller
                     return '<span class="badge badge-danger">'.Helpers::statusKontrol($data->kipas_pendingin).'</span>';
                 }
             })
-            ->editColumn('kipas_pemanas', function($data){
-                if ($data->kipas_pemanas == 1) {
-                    return '<span class="badge badge-success">'.Helpers::statusKontrol($data->kipas_pemanas).'</span>';
-                } else {
-                    return '<span class="badge badge-danger">'.Helpers::statusKontrol($data->kipas_pemanas).'</span>';
-                }
-            })
+            // ->editColumn('kipas_pemanas', function($data){
+            //     if ($data->kipas_pemanas == 1) {
+            //         return '<span class="badge badge-success">'.Helpers::statusKontrol($data->kipas_pemanas).'</span>';
+            //     } else {
+            //         return '<span class="badge badge-danger">'.Helpers::statusKontrol($data->kipas_pemanas).'</span>';
+            //     }
+            // })
             ->editColumn('pompa_nutrisi', function($data){
                 if ($data->pompa_nutrisi == 1) {
                     return '<span class="badge badge-success">'.Helpers::statusKontrol($data->pompa_nutrisi).'</span>';

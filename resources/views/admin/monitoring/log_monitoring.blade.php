@@ -91,7 +91,6 @@
       { data: 'nutrisi_air', name: 'nutrisi_air', orderable: false },
       { data: 'pompa_siram', name: 'pompa_siram', orderable: false },
       { data: 'kipas_pendingin', name: 'kipas_pendingin', orderable: false },
-      // { data: 'kipas_pemanas', name: 'kipas_pemanas', orderable: false },
       { data: 'pompa_nutrisi', name: 'pompa_nutrisi', orderable: false },
       { data: 'lampu_led', name: 'lampu_led', orderable: false },
     ]

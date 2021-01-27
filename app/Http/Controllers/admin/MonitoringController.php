@@ -101,8 +101,6 @@ class MonitoringController extends Controller
         $mulai = $request->tanggal_mulai;
         $akhir = $request->tanggal_akhir;
 
-        // $data = LogMonitoring::where('kode_alat', $kode_alat)->orderBy('id', 'DESC');
-
         if ($mulai != null && $akhir != null) {
             $data = DB::select('SELECT * 
             FROM log_monitoring 
@@ -122,10 +120,6 @@ class MonitoringController extends Controller
                           GROUP BY DATE_FORMAT(created_at,"%Y-%m-%d %H:%i:00") + 
                          INTERVAL (MINUTE(created_at) - MINUTE(created_at) MOD 1) MINUTE ) ORDER BY id DESC');
         }
-        
-        // if ($mulai != null && $akhir != null) {
-        //     $data->whereBetween('created_at', [date('Y-m-d 00:00:00', strtotime($mulai)), date('Y-m-d 23:59:59', strtotime($akhir))]);
-        // }
 
         return Datatables::of($data)
             ->addIndexColumn()
@@ -163,13 +157,6 @@ class MonitoringController extends Controller
                     return '<span class="badge badge-danger">'.Helpers::statusKontrol($data->kipas_pendingin).'</span>';
                 }
             })
-            // ->editColumn('kipas_pemanas', function($data){
-            //     if ($data->kipas_pemanas == 1) {
-            //         return '<span class="badge badge-success">'.Helpers::statusKontrol($data->kipas_pemanas).'</span>';
-            //     } else {
-            //         return '<span class="badge badge-danger">'.Helpers::statusKontrol($data->kipas_pemanas).'</span>';
-            //     }
-            // })
             ->editColumn('pompa_nutrisi', function($data){
                 if ($data->pompa_nutrisi == 1) {
                     return '<span class="badge badge-success">'.Helpers::statusKontrol($data->pompa_nutrisi).'</span>';

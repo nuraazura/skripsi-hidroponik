@@ -33,6 +33,7 @@ class MonitoringController extends Controller
     {
         $alats = Alat::where('user_id', $user_id)->get();
         // return $alats;
+        
         return view('admin.monitoring.daftar_alat', compact('alats', 'user_id'));
     }
 

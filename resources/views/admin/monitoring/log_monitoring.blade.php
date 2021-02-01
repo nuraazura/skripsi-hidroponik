@@ -39,13 +39,15 @@
                           <th>Nama Tanaman</th>
                           <th>Usia Tanaman</th>
                           <th>Waktu Pembacaan</th>
+                          <th>Suhu Udara</th>
+                          <th>Kelembapan Udara</th>
                           <th>Kelembapan Rockwool</th>
-                          <th>Suhu Ruangan</th>
                           <th>Nutrisi Air</th>
+                          <th>Suhu Air</th>
                           <th>Status Pompa Siram</th>
                           <th>Status Kipas</th>
-                          {{-- <th>Status Heater</th> --}}
                           <th>Status Pompa Nutrisi</th>
+                          <th>Status Pompa Air</th>
                           <th>Status Lampu Led</th>
                         </tr>
                       </thead>
@@ -86,12 +88,16 @@
       { data: 'nama_tanaman', name: 'nama_tanaman', orderable: false },
       { data: 'usia_tanaman', name: 'usia_tanaman', orderable: false },
       { data: 'waktu_pembacaan', name: 'waktu_pembacaan', orderable: false },
-      { data: 'kelembapan_air', name: 'kelembapan_air', orderable: false },
       { data: 'suhu_ruangan', name: 'suhu_ruangan', orderable: false },
+      { data: 'kelembaban_udara', name: 'kelembaban_udara', orderable: false },
+      { data: 'kelembapan_air', name: 'kelembapan_air', orderable: false },
       { data: 'nutrisi_air', name: 'nutrisi_air', orderable: false },
+      { data: 'suhu_air', name: 'suhu_air', orderable: false },
       { data: 'pompa_siram', name: 'pompa_siram', orderable: false },
       { data: 'kipas_pendingin', name: 'kipas_pendingin', orderable: false },
+      // { data: 'kipas_pemanas', name: 'kipas_pemanas', orderable: false },
       { data: 'pompa_nutrisi', name: 'pompa_nutrisi', orderable: false },
+      { data: 'pompa_air', name: 'pompa_air', orderable: false },
       { data: 'lampu_led', name: 'lampu_led', orderable: false },
     ]
   })

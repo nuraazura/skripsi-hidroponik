@@ -140,8 +140,14 @@ class MonitoringController extends Controller
             ->addColumn('suhu_ruangan', function($data){
                 return $data->suhu_udara.' <sup>0 </sup>C';
             })
+            ->addColumn('kelembaban_udara', function($data){
+                return $data->kelembaban_udara.' %';
+            })
             ->editColumn('nutrisi_air', function($data){
                 return $data->nutrisi_air.' ppm';
+            })
+            ->editColumn('suhu_air', function($data){
+                return $data->suhu_air.' <sup>0 </sup>C';
             })
             ->editColumn('pompa_siram', function($data){
                 if ($data->pompa_siram == 1) {
@@ -164,6 +170,13 @@ class MonitoringController extends Controller
                     return '<span class="badge badge-danger">'.Helpers::statusKontrol($data->pompa_nutrisi).'</span>';
                 }
             })
+            ->editColumn('pompa_air', function($data){
+                if ($data->pompa_air == 1) {
+                    return '<span class="badge badge-success">'.Helpers::statusKontrol($data->pompa_air).'</span>';
+                } else {
+                    return '<span class="badge badge-danger">'.Helpers::statusKontrol($data->pompa_air).'</span>';
+                }
+            })
             ->editColumn('lampu_led', function($data){
                 if ($data->lampu_led == 1) {
                     return '<span class="badge badge-success">'.Helpers::statusKontrol($data->lampu_led).'</span>';
@@ -176,12 +189,15 @@ class MonitoringController extends Controller
                 'nama_tanaman', 
                 'usia_tanaman', 
                 'waktu_pembacaan', 
-                'kelembapan_air',
                 'suhu_ruangan',
+                'kelembaban_udara',
+                'kelembapan_air',
+                'suhu_air',
                 'pompa_siram',
                 'kipas_pendingin',
-                'kipas_pemanas',
+                // 'kipas_pemanas',
                 'pompa_nutrisi',
+                'pompa_air',
                 'lampu_led',
             ])
             ->make(true);

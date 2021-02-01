@@ -10,22 +10,24 @@ use App\Alat;
 class MonitoringAlatController extends Controller
 {
     
-    public function logMonitoring(Request $request, $kode_alat_id, $suhu_udara, $kelembapan, $nutrisi){
-        $input['kode_alat_id']  = $request->kode_alat_id;
-        $input['suhu_udara']    = $request->suhu_udara;
-        $input['kelembapan']    = $request->kelembapan;
-        $input['nutrisi']       = $request->nutrisi;
+    public function logMonitoring(Request $request, $kode_alat_id, $suhu_udara, $kelembaban_udara, $kelembapan, $nutrisi){
+        $input['kode_alat_id']      = $request->kode_alat_id;
+        $input['suhu_udara']        = $request->suhu_udara;
+        $input['kelembaban_udara']  = $request->kelembaban_udara;
+        $input['kelembapan']        = $request->kelembapan;
+        $input['nutrisi']           = $request->nutrisi;
         $kode_alat_id  =  LogMonitoring::where('kode_alat_id',$input['kode_alat_id'])->first();
         $simpan = LogMonitoring::create($input);
         
         return ($input);
     }
 
-    public function monitoring(Request $request, $kode_alat_id, $suhu_udara, $kelembapan, $nutrisi){
-        $input['kode_alat_id']  = $request->kode_alat_id;
-        $input['suhu_udara']    = $request->suhu_udara;
-        $input['kelembapan']    = $request->kelembapan;
-        $input['nutrisi']       = $request->nutrisi;
+    public function monitoring(Request $request, $kode_alat_id, $suhu_udara, $kelembaban_udara, $kelembapan, $nutrisi){
+        $input['kode_alat_id']      = $request->kode_alat_id;
+        $input['suhu_udara']        = $request->suhu_udara;
+        $input['kelembaban_udara']  = $request->kelembaban_udara;
+        $input['kelembapan']        = $request->kelembapan;
+        $input['nutrisi']           = $request->nutrisi;
         $kode_alat_id  =  Monitoring::where('kode_alat_id',$input['kode_alat_id'])->first();
         //jika node sensor blm ada maka di buat
         if (empty($kode_alat_id)) {

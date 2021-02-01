@@ -73,11 +73,17 @@ class MonitoringController extends Controller
             ->editColumn('kelembapan_air', function($data){
                 return $data->kelembapan_air. ' %';
             })
+            ->editColumn('nutrisi_air', function($data){
+                return $data->nutrisi_air.' ppm';
+            })
+            ->editColumn('suhu_air', function($data){
+                return $data->suhu_air.' <sup>0 </sup>C';
+            })
             ->addColumn('suhu_ruangan', function($data){
                 return $data->suhu_udara.' <sup>0 </sup>C';
             })
-            ->editColumn('nutrisi_air', function($data){
-                return $data->nutrisi_air.' ppm';
+            ->addColumn('kelembaban_udara', function($data){
+                return $data->kelembaban_udara.' %';
             })
             ->editColumn('pompa_siram', function($data){
                 if ($data->pompa_siram == 1) {
@@ -93,13 +99,13 @@ class MonitoringController extends Controller
                     return '<span class="badge badge-danger">'.Helpers::statusKontrol($data->kipas_pendingin).'</span>';
                 }
             })
-            // ->editColumn('kipas_pemanas', function($data){
-            //     if ($data->kipas_pemanas == 1) {
-            //         return '<span class="badge badge-success">'.Helpers::statusKontrol($data->kipas_pemanas).'</span>';
-            //     } else {
-            //         return '<span class="badge badge-danger">'.Helpers::statusKontrol($data->kipas_pemanas).'</span>';
-            //     }
-            // })
+            ->editColumn('pompa_air', function($data){
+                if ($data->pompa_air == 1) {
+                    return '<span class="badge badge-success">'.Helpers::statusKontrol($data->pompa_air).'</span>';
+                } else {
+                    return '<span class="badge badge-danger">'.Helpers::statusKontrol($data->pompa_air).'</span>';
+                }
+            })
             ->editColumn('pompa_nutrisi', function($data){
                 if ($data->pompa_nutrisi == 1) {
                     return '<span class="badge badge-success">'.Helpers::statusKontrol($data->pompa_nutrisi).'</span>';
@@ -119,11 +125,14 @@ class MonitoringController extends Controller
                 'nama_tanaman', 
                 'usia_tanaman', 
                 'waktu_pembacaan', 
-                'kelembapan_air',
                 'suhu_ruangan',
+                'kelembaban_udara',
+                'kelembapan_air',
+                'nutrisi_air',
+                'suhu_air',
                 'pompa_siram',
                 'kipas_pendingin',
-                'kipas_pemanas',
+                'pompa_air',
                 'pompa_nutrisi',
                 'lampu_led',
             ])

@@ -32,7 +32,7 @@ Route::get('kirim-data/{kodeAlat}/{kelembapan_air}/{nutrisi_air}/{suhu_air}/{suh
 Route::get('get-status/kontrol/{kodeAlat}', 'KendaliController@statusKontrol');
 
 // Route::get('log-monitoring/{kodeAlat}/{kelembapan}/{nutrisi}/{suhu}', 'KirimDataController@inputLog');
-Route::get('log-monitoring/{kode_alat_id}/{suhu_udara}/{kelembapan}/{nutrisi}','MonitoringAlatController@logMonitoring');
-Route::get('monitoring/{kode_alat_id}/{suhu_udara}/{kelembapan}/{nutrisi}','MonitoringAlatController@monitoring');
+// Route::get('log-monitoring/{kode_alat_id}/{suhu_udara}/{kelembapan}/{nutrisi}','MonitoringAlatController@logMonitoring');
+// Route::get('monitoring/{kode_alat_id}/{suhu_udara}/{kelembapan}/{nutrisi}','MonitoringAlatController@monitoring');
 
 Route::get('get-data/{user_id}', 'MonitoringAlatController@getData');

@@ -43,7 +43,7 @@
                       <th>Kelembapan Udara</th>
                       <th>Kelembapan Rockwool</th>
                       <th>Nutrisi Air</th>
-                      <th>Suhu Air</th>
+                      {{-- <th>Suhu Air</th> --}}
                       <th>Status Pompa Siram</th>
                       <th>Status Kipas</th>
                       <th>Status Pompa Nutrisi</th>
@@ -90,7 +90,7 @@
       { data: 'kelembaban_udara', name: 'kelembaban_udara', orderable: false },
       { data: 'kelembapan_air', name: 'kelembapan_air', orderable: false },
       { data: 'nutrisi_air', name: 'nutrisi_air', orderable: false },
-      { data: 'suhu_air', name: 'suhu_air', orderable: false },
+      // { data: 'suhu_air', name: 'suhu_air', orderable: false },
       { data: 'pompa_siram', name: 'pompa_siram', orderable: false },
       { data: 'kipas_pendingin', name: 'kipas_pendingin', orderable: false },
       // { data: 'kipas_pemanas', name: 'kipas_pemanas', orderable: false },

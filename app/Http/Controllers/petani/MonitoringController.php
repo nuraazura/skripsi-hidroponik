@@ -76,9 +76,9 @@ class MonitoringController extends Controller
             ->editColumn('nutrisi_air', function($data){
                 return $data->nutrisi_air.' ppm';
             })
-            ->editColumn('suhu_air', function($data){
-                return $data->suhu_air.' <sup>0 </sup>C';
-            })
+            // ->editColumn('suhu_air', function($data){
+            //     return $data->suhu_air.' <sup>0 </sup>C';
+            // })
             ->addColumn('suhu_ruangan', function($data){
                 return $data->suhu_udara.' <sup>0 </sup>C';
             })
@@ -129,7 +129,7 @@ class MonitoringController extends Controller
                 'kelembaban_udara',
                 'kelembapan_air',
                 'nutrisi_air',
-                'suhu_air',
+                // 'suhu_air',
                 'pompa_siram',
                 'kipas_pendingin',
                 'pompa_air',

@@ -45,13 +45,13 @@
                 <div class="small text-gray-500 message-time" id="{{'kelembapanRockwool_'.$dataAlat->kode_alat}}">0 %</div>
               </a>
             </div>
-            <div class="customer-message align-items-center">
+            {{-- <div class="customer-message align-items-center">
               <a class="font-weight-bold" href="#">
                 <div class="text-truncate message-title">Suhu Air
                 </div>
                 <div class="small text-gray-500 message-time font-weight-bold" id="{{'suhuAir_'.$dataAlat->kode_alat}}">0 C</div>
               </a>
-            </div>
+            </div> --}}
             <div class="customer-message align-items-center">
               <a class="font-weight-bold" href="#">
                 <div class="text-truncate message-title">Nutrisi Air
@@ -130,7 +130,7 @@
         $('#suhuUdara_'+item.kode_alat).html(item.suhu_udara+ ' C')
         $('#kelembabanUdara_'+item.kode_alat).html(item.kelembaban_udara+ ' %')
         $('#kelembapanRockwool_'+item.kode_alat).html(item.kelembapan_air+ ' %')
-        $('#suhuAir_'+item.kode_alat).html(item.suhu_air+ ' C')
+        // $('#suhuAir_'+item.kode_alat).html(item.suhu_air+ ' C')
         $('#nutrisiAir_'+item.kode_alat).html(item.nutrisi_air+ ' ppm')
 
         $('#kipas_'+item.kode_alat).html(statusUbah(item.kipas_pendingin))

@@ -147,9 +147,9 @@ class MonitoringController extends Controller
             ->editColumn('nutrisi_air', function($data){
                 return $data->nutrisi_air.' ppm';
             })
-            ->editColumn('suhu_air', function($data){
-                return $data->suhu_air.' <sup>0 </sup>C';
-            })
+            // ->editColumn('suhu_air', function($data){
+            //     return $data->suhu_air.' <sup>0 </sup>C';
+            // })
             ->editColumn('pompa_siram', function($data){
                 if ($data->pompa_siram == 1) {
                     return '<span class="badge badge-success">'.Helpers::statusKontrol($data->pompa_siram).'</span>';
@@ -193,7 +193,7 @@ class MonitoringController extends Controller
                 'suhu_ruangan',
                 'kelembaban_udara',
                 'kelembapan_air',
-                'suhu_air',
+                // 'suhu_air',
                 'pompa_siram',
                 'kipas_pendingin',
                 // 'kipas_pemanas',

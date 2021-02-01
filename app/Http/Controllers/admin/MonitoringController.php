@@ -7,8 +7,8 @@ use Yajra\Datatables\Datatables;
 use Illuminate\Http\Request;
 use DB;
 use App\Helpers;
-use App\user;
-use App\alat;
+use App\User;
+use App\Alat;
 use App\LogMonitoring;
 
 class MonitoringController extends Controller

@@ -12,8 +12,8 @@ class KirimDataController extends Controller
 {
     public function kirim_data($kodeAlat, $kelembapan_air, $nutrisi_air, $suhu_air, $suhu_udara, $kelembaban_udara)
     {
-        $log = [];
-        $timeNow = date('H:i:s');
+        $log = []; // deklarasi variabel array
+        $timeNow = date('H:i:s'); // deklarasi variabel waktu
         $input = [
             'kode_alat'         => $kodeAlat,
             'kelembapan_air'    => $kelembapan_air,

@@ -45,16 +45,16 @@ class MonitoringController extends Controller
             created_at <= "'.date('Y-m-d 00:00:00', strtotime($akhir.' +1 day')).'" AND
             created_at IN ( SELECT MIN(created_at) AS created_at
                           FROM log_monitoring
-                          GROUP BY DATE_FORMAT(created_at,"%Y-%m-%d %H:%i:00") + 
-                         INTERVAL (MINUTE(created_at) - MINUTE(created_at) MOD 1) MINUTE ) ORDER BY id DESC');
+                          GROUP BY DATE_FORMAT(created_at,"%Y-%m-%d %H:00") + 
+                         INTERVAL (MINUTE(created_at) - MINUTE(created_at) MOD 5) MINUTE ) ORDER BY id DESC');
         } else {
             $data = DB::select('SELECT * 
             FROM log_monitoring 
             WHERE kode_alat = "'.$kode_alat.'" AND
             created_at IN ( SELECT MIN(created_at) AS created_at
                           FROM log_monitoring
-                          GROUP BY DATE_FORMAT(created_at,"%Y-%m-%d %H:%i:00") + 
-                         INTERVAL (MINUTE(created_at) - MINUTE(created_at) MOD 1) MINUTE ) ORDER BY id DESC');
+                          GROUP BY DATE_FORMAT(created_at,"%Y-%m-%d %H:00") + 
+                         INTERVAL (MINUTE(created_at) - MINUTE(created_at) MOD 5) MINUTE ) ORDER BY id DESC');
         }
 
         return Datatables::of($data)

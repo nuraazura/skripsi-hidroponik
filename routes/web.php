@@ -77,3 +77,52 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin', 'middleware' => 'auth
 // Route::get('kirim-data/{kodeAlat}','KirimDataController@cekData');
 
     });
+
+    Route::get('cek-waktu', function () {
+        $waktusekarang = date("d-m-Y H:i:s");
+        return $waktusekarang;
+
+        
+    });
+
+
+    // Route::get('normalisasi', function () {
+    //     $datas = DB::table('log_monitoring')
+    //                 ->where('created_at', '>', '2021-02-22')
+    //                 ->where('created_at', '<=', '2021-02-24')
+    //                 // ->where('nutrisi_air', '>', 400)
+    //                 ->get();
+        // dd($datas);
+        // foreach ($datas as $key => $data) {
+
+        //     DB::table('log_monitoring')->where('id', $data->id)->update([
+        //         'pompa_siram' => 1
+        //     ]);
+            // if ($data->nutrisi_air > 300) {
+            //     $nut = $data->nutrisi_air - 40;
+    
+            // }
+
+            // if ($data->nutrisi_air > 400) {
+            //     $nut = $data->nutrisi_air - 100;
+    
+            //     DB::table('log_monitoring')->where('id', $data->id)->update([
+            //         'nutrisi_air' => $nut
+            //     ]);
+            // }
+
+            // // if ($data->nutrisi_air < 60) {
+            //     $nut = $data->nutrisi_air + 100;
+    
+            //     DB::table('log_monitoring')->where('id', $data->id)->update([
+            //         'nutrisi_air' => $nut
+            //     ]);
+            // }
+       
+    //      }
+    //     return 'success';
+    // });
+
+    // Route::get('lihat-data', function () {
+    //     return $datas = DB::table('log_monitoring')->where('created_at', 'LIKE', '%2021-02-17%')->get();
+    // });

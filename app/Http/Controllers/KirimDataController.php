@@ -23,16 +23,9 @@ class KirimDataController extends Controller
             'kelembaban_udara'  => $kelembaban_udara,
         ];
 
-        // update status kontrol alat
-        $alat = Alat::where('kode_alat', $input['kode_alat'])->first();
+        // proses update status kontrol alat
+        $alat = Alat::where('kode_alat', $input['kode_alat'])->first(); //ambil data alat berdasarkan kode alat
         
-        // logic kipas pendingin
-        if ($input['suhu_udara'] > $alat->suhu_udara_max) {
-            $kontrol['kipas_pendingin'] = 1;
-        } else {
-            $kontrol['kipas_pendingin'] = 0;
-        }
-
         // pompa nutrisi
         if ($input['nutrisi_air'] < $alat->nutrisi_min) {
             // pompa nutrisi aktif
@@ -41,7 +34,6 @@ class KirimDataController extends Controller
             // pompa nutrisi tidak aktif     
             $kontrol['pompa_nutrisi'] = 0;
         }
-
         // pompa air
         if ($input['nutrisi_air'] > $alat->nutrisi_max) {
             // pompa air aktif
@@ -50,25 +42,13 @@ class KirimDataController extends Controller
             // pompa air tidak aktif
             $kontrol['pompa_air'] = 0;
         }
-
-        // pompa siram
-        if ($alat->waktu_penyiraman_mulai < $alat->waktu_penyiraman_selesai) {
-            if ($timeNow >= $alat->waktu_penyiraman_mulai && $timeNow < $alat->waktu_penyiraman_selesai) {
-                // led hidup
-                $kontrol['pompa_siram'] = 1;
-            } else {
-                // led mati
-                $kontrol['pompa_siram'] = 0;
-            }
+        // logic kipas pendingin
+        if ($input['suhu_udara'] > $alat->suhu_udara_max) {
+            $kontrol['kipas_pendingin'] = 1;
         } else {
-            if ($timeNow >= $alat->waktu_penyiraman_mulai || $timeNow < $alat->waktu_penyiraman_selesai) {
-                // led hidup
-                $kontrol['pompa_siram'] = 1;
-            } else {
-                // led mati
-                $kontrol['pompa_siram'] = 0;
-            }
+            $kontrol['kipas_pendingin'] = 0;
         }
+
         
         // lampu led
         if ($alat->lampu_hidup < $alat->lampu_mati) {
@@ -89,6 +69,26 @@ class KirimDataController extends Controller
                 // led mati
                 $kontrol['lampu_led'] = 0;
             }
+
+        // pompa siram
+        if ($alat->waktu_penyiraman_mulai < $alat->waktu_penyiraman_selesai) {
+            if ($timeNow >= $alat->waktu_penyiraman_mulai && $timeNow < $alat->waktu_penyiraman_selesai) {
+                // led hidup
+                $kontrol['pompa_siram'] = 1;
+            } else {
+                // led mati
+                $kontrol['pompa_siram'] = 0;
+            }
+        } else {
+            if ($timeNow >= $alat->waktu_penyiraman_mulai || $timeNow < $alat->waktu_penyiraman_selesai) {
+                // led hidup
+                $kontrol['pompa_siram'] = 1;
+            } else {
+                // led mati
+                $kontrol['pompa_siram'] = 0;
+            }
+        }
+        
         }
         
         Kontrol::updateOrCreate(['kode_alat' => $kodeAlat], $kontrol);

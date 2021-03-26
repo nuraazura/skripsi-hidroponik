@@ -163,3 +163,27 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin', 'middleware' => 'auth
         }
         return 'haha';
     });
+
+    Route::get('json', function () {
+        $path = "./log_monitoring.json";
+        $json = json_decode(file_get_contents($path), true);
+        // return $json[2]['data'];
+
+        foreach ($json[2]['data'] as $key => $val) {
+            DB::table('log_monitoring')->create([
+                'kode_alat' => $val->kode_alat,
+                'kelembapan_air' => $val->kelembapan_air,
+                'suhu_air' => $val->suhu_air,
+                'nutrisi_air' => $val->nutrisi_air,
+                'suhu_udara' => $val->suhu_udara,
+                'kelembaban_udara' => $val->kelembaban_udara,
+                'kipas_pendingin' => $val->kipas_pendingin,
+                'pompa_nutrisi' => $val->pompa_nutrisi,
+                'pompa_air' => $val->pompa_air,
+                'pompa_siram' => $val->pompa_siram,
+                'lampu_led' => $val->lampu_led,
+                'created_at' => $val->created_at,
+                'updated_at' => $val->updated_at,
+            ]);
+        }
+    });

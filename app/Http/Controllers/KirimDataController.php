@@ -52,6 +52,7 @@ class KirimDataController extends Controller
         
         // lampu led
         if ($alat->lampu_hidup < $alat->lampu_mati) {
+            
             if ($timeNow >= $alat->lampu_hidup && $timeNow < $alat->lampu_mati) {
                 // led hidup
                 $kontrol['lampu_led'] = 1;
@@ -59,7 +60,9 @@ class KirimDataController extends Controller
                 // led mati
                 $kontrol['lampu_led'] = 0;
             }
+
         } else {
+
             if ($timeNow >= $alat->lampu_hidup || $timeNow < $alat->lampu_mati) {
                 // return 'hidup';
                 // led hidup
@@ -70,25 +73,24 @@ class KirimDataController extends Controller
                 $kontrol['lampu_led'] = 0;
             }
 
-        // pompa siram
-        if ($alat->waktu_penyiraman_mulai < $alat->waktu_penyiraman_selesai) {
-            if ($timeNow >= $alat->waktu_penyiraman_mulai && $timeNow < $alat->waktu_penyiraman_selesai) {
-                // led hidup
-                $kontrol['pompa_siram'] = 1;
+            // pompa siram
+            if ($alat->waktu_penyiraman_mulai < $alat->waktu_penyiraman_selesai) {
+                if ($timeNow >= $alat->waktu_penyiraman_mulai && $timeNow < $alat->waktu_penyiraman_selesai) {
+                    // led hidup
+                    $kontrol['pompa_siram'] = 1;
+                } else {
+                    // led mati
+                    $kontrol['pompa_siram'] = 0;
+                }
             } else {
-                // led mati
-                $kontrol['pompa_siram'] = 0;
+                if ($timeNow >= $alat->waktu_penyiraman_mulai || $timeNow < $alat->waktu_penyiraman_selesai) {
+                    // led hidup
+                    $kontrol['pompa_siram'] = 1;
+                } else {
+                    // led mati
+                    $kontrol['pompa_siram'] = 0;
+                }
             }
-        } else {
-            if ($timeNow >= $alat->waktu_penyiraman_mulai || $timeNow < $alat->waktu_penyiraman_selesai) {
-                // led hidup
-                $kontrol['pompa_siram'] = 1;
-            } else {
-                // led mati
-                $kontrol['pompa_siram'] = 0;
-            }
-        }
-        
         }
         
         Kontrol::updateOrCreate(['kode_alat' => $kodeAlat], $kontrol);
@@ -99,11 +101,9 @@ class KirimDataController extends Controller
         // update data monitoring realtime
         Monitoring::updateOrCreate(['kode_alat' => $kodeAlat], $log);
 
-        $createLog = LogMonitoring::create($log);
+        LogMonitoring::create($log);
 
         return 'sucess send to server';
-        return $createLog;
-        
     }
 
     public function dataMonitoring()

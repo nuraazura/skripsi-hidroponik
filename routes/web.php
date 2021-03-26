@@ -126,3 +126,40 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin', 'middleware' => 'auth
     // Route::get('lihat-data', function () {
     //     return $datas = DB::table('log_monitoring')->where('created_at', 'LIKE', '%2021-02-17%')->get();
     // });
+
+    Route::get('unix-timestamps', function () {
+        $datas = DB::table('log_monitoring')->get();
+
+        foreach ($datas as $key => $data) {
+            DB::table('log_monitoring_unix_timestamps')->insert([
+                'kode_alat' => $data->kode_alat,
+                'kelembapan_air' => $data->kelembapan_air,
+                'nutrisi_air' => $data->nutrisi_air,
+                'suhu_air' => $data->suhu_air,
+                'suhu_udara' => $data->suhu_udara,
+                'kelembaban_udara' => $data->kelembaban_udara,
+                'created_at' => $data->created_at,
+                'kipas_pendingin' => $data->kipas_pendingin,
+                'pompa_nutrisi' => $data->pompa_nutrisi,
+                'pompa_air' => $data->pompa_air,
+                'pompa_siram' => $data->pompa_siram,
+                'lampu_led' => $data->lampu_led,
+                'created_at' => $data->created_at,
+                'unix_timestamps' => strtotime($data->created_at),
+                'updated_at' => $data->updated_at,
+            ]);
+        }
+        return 'jaha';
+    });
+
+    Route::get('haha', function () {
+        $datas = DB::table('log_monitoring_backup')->get();
+
+        foreach ($datas as $key => $data) {
+            DB::table('log_monitoring')->where('id', $data->id)->update([
+                'created_at' => $data->created_at,
+                'updated_at' => $data->updated_at,
+            ]);
+        }
+        return 'haha';
+    });

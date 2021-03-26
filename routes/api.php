@@ -20,6 +20,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 // fix yg di pakai untuk kirim data dari alat
 Route::get('kirim-data/{kodeAlat}/{kelembapan_air}/{nutrisi_air}/{suhu_air}/{suhu_udara}/{kelembaban_udara}', 'KirimDataController@kirim_data');
+// fix yg dipakai untuk req status alat dri alat
+Route::get('get-status/kontrol/{kodeAlat}', 'KendaliController@statusKontrol');
+//Api untuk get data realtime monitoring
+Route::get('get-data/{user_id}', 'MonitoringAlatController@getData');
 
 // Route::get('get-status/kipas-pendingin/{kodeAlat}', 'KendaliController@kipasPendingin');
 // Route::get('get-status/kipas-pemanas/{kodeAlat}', 'KendaliController@kipasPemanas');
@@ -28,11 +32,7 @@ Route::get('kirim-data/{kodeAlat}/{kelembapan_air}/{nutrisi_air}/{suhu_air}/{suh
 // Route::get('get-status/pompa-nutrisi/{kodeAlat}', 'KendaliController@pompaNutrisi');
 // Route::get('get-status/pompa-air/{kodeAlat}', 'KendaliController@pompaAir');
 
-// fix yg dipakai untuk req status alat dri alat
-Route::get('get-status/kontrol/{kodeAlat}', 'KendaliController@statusKontrol');
 
 // Route::get('log-monitoring/{kodeAlat}/{kelembapan}/{nutrisi}/{suhu}', 'KirimDataController@inputLog');
 // Route::get('log-monitoring/{kode_alat_id}/{suhu_udara}/{kelembapan}/{nutrisi}','MonitoringAlatController@logMonitoring');
 // Route::get('monitoring/{kode_alat_id}/{suhu_udara}/{kelembapan}/{nutrisi}','MonitoringAlatController@monitoring');
-
-Route::get('get-data/{user_id}', 'MonitoringAlatController@getData');

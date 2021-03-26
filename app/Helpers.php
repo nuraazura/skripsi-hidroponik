@@ -1,6 +1,7 @@
 <?php
 
 namespace App;
+use DB;
 
 class Helpers
 {
@@ -9,10 +10,13 @@ class Helpers
         return 'test success';
     }
 
-    public static function dateDiff($startDate)
+    public static function dateDiff($startDate, $kodeAlat)
     {
+        $logMonitoring = DB::table('log_monitoring')->where('kode_alat', $kodeAlat)->orderBy('id', 'desc')->first();
+        $dataLast = date('d-m-Y', strtotime($logMonitoring->created_at));
+
         if ($startDate) {
-            $now = date('d-m-Y');
+            $now = $dataLast;
             $start = strtotime(date('d-m-Y', strtotime($startDate)));
             $diff = strtotime($now) - $start;
     

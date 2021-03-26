@@ -23,7 +23,7 @@
             <div class="customer-message align-items-center">
               <a class="font-weight-bold" href="#">
                 <div class="text-truncate message-title">Usia Tanaman</div>
-                <div class="small text-gray-500 message-time font-weight-bold" id="usiaTanaman">{{ App\Helpers::dateDiff($dataAlat->created_at) }} Hari</div>
+                <div class="small text-gray-500 message-time font-weight-bold" id="usiaTanaman">{{ App\Helpers::dateDiff($dataAlat->created_at, $dataAlat->kode_alat) }} Hari</div>
               </a>
             </div>
             <div class="customer-message align-items-center">

@@ -170,7 +170,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin', 'middleware' => 'auth
         // return $json[2]['data'];
 
         foreach ($json[2]['data'] as $key => $val) {
-            DB::table('log_monitoring')->create([
+            DB::table('log_monitoring')->insert([
                 'kode_alat' => $val['kode_alat'],
                 'kelembapan_air' => $val['kelembapan_air'],
                 'suhu_air' => $val['suhu_air'],

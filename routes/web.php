@@ -1,5 +1,6 @@
 <?php
 
+use App\LogMonitoring;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -86,18 +87,21 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin', 'middleware' => 'auth
     });
 
 
-    // Route::get('normalisasi', function () {
-    //     $datas = DB::table('log_monitoring')
-    //                 ->where('created_at', '>', '2021-02-22')
-    //                 ->where('created_at', '<=', '2021-02-24')
-    //                 // ->where('nutrisi_air', '>', 400)
-    //                 ->get();
-        // dd($datas);
-        // foreach ($datas as $key => $data) {
+    Route::get('normalisasi', function () {
+        $datas = DB::table('log_monitoring')
+                    ->where('created_at', '>=', '2021-02-22 00:01')
+                    ->where('created_at', '<=', '2021-02-22 01:00:00')
+                    // ->where('created_at', 'like', '%2021-02-20%')
+                    // ->where('nutrisi_air', '>=', 400)
+                    ->get();
+        
+        // return $datas;
+        foreach ($datas as $key => $data) {
 
-        //     DB::table('log_monitoring')->where('id', $data->id)->update([
-        //         'pompa_siram' => 1
-        //     ]);
+            DB::table('log_monitoring')->where('id', $data->id)->update([
+                // 'pompa_siram' => 1
+                'lampu_led' => 0
+            ]);
             // if ($data->nutrisi_air > 300) {
             //     $nut = $data->nutrisi_air - 40;
     
@@ -112,20 +116,20 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin', 'middleware' => 'auth
             // }
 
             // // if ($data->nutrisi_air < 60) {
-            //     $nut = $data->nutrisi_air + 100;
+                // $nut = $data->nutrisi_air - 100;
     
-            //     DB::table('log_monitoring')->where('id', $data->id)->update([
-            //         'nutrisi_air' => $nut
-            //     ]);
+                // DB::table('log_monitoring')->where('id', $data->id)->update([
+                //     'nutrisi_air' => $nut
+                // ]);
             // }
        
-    //      }
-    //     return 'success';
-    // });
+         }
+        return 'success';
+    });
 
-    // Route::get('lihat-data', function () {
-    //     return $datas = DB::table('log_monitoring')->where('created_at', 'LIKE', '%2021-02-17%')->get();
-    // });
+    Route::get('lihat-data', function () {
+        return $datas = DB::table('log_monitoring')->where('created_at', 'LIKE', '%2021-02-16%')->get();
+    });
 
     Route::get('unix-timestamps', function () {
         $datas = DB::table('log_monitoring')->get();
@@ -186,4 +190,26 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin', 'middleware' => 'auth
                 'updated_at' => $val['updated_at'],
             ]);
         }
+    });
+
+    Route::get('salin-data', function () {
+        $datas = DB::table('log_monitoring_backup_server')->where('kode_alat', 'A_3')->orderBy('id', 'asc')->get();
+        foreach ($datas as $key => $data) {
+            DB::table('log_monitoring')->insert([
+                'kode_alat' => $data->kode_alat,
+                'kelembapan_air' => $data->kelembapan_air,
+                'suhu_air' => $data->suhu_air,
+                'nutrisi_air' => $data->nutrisi_air,
+                'suhu_udara' => $data->suhu_udara,
+                'kelembaban_udara' => $data->kelembaban_udara,
+                'kipas_pendingin' => $data->kipas_pendingin,
+                'pompa_nutrisi' => $data->pompa_nutrisi,
+                'pompa_air' => $data->pompa_air,
+                'pompa_siram' => $data->pompa_siram,
+                'lampu_led' => $data->lampu_led,
+                'created_at' => $data->created_at,
+                'updated_at' => $data->updated_at,
+            ]);
+        }
+        return 'success';
     });

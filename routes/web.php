@@ -98,10 +98,10 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin', 'middleware' => 'auth
         // return $datas;
         foreach ($datas as $key => $data) {
 
-            DB::table('log_monitoring')->where('id', $data->id)->update([
+            // DB::table('log_monitoring')->where('id', $data->id)->update([
                 // 'pompa_siram' => 1
-                'lampu_led' => 0
-            ]);
+                // 'lampu_led' => 0
+            // ]);
             // if ($data->nutrisi_air > 300) {
             //     $nut = $data->nutrisi_air - 40;
     

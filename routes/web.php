@@ -169,7 +169,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin', 'middleware' => 'auth
     });
 
     Route::get('json', function () {
-        $path = "./log_monitoring.json";
+        $path = "./log_monitoring_gabung_a3.json";
         $json = json_decode(file_get_contents($path), true);
         // return $json[2]['data'];
 

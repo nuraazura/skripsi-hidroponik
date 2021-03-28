@@ -34,10 +34,15 @@ class MonitoringController extends Controller
 
     public function get_data(Request $request, $kode_alat)
     {
+        $rentangWaktu = 5;
         $mulai = $request->tanggal_mulai;
         $akhir = $request->tanggal_akhir;
+        
 
         if ($mulai != null && $akhir != null) {
+            if ($request->rentang_waktu != null) {
+                $rentangWaktu = $request->rentang_waktu;
+            }
             $data = DB::select('SELECT * 
             FROM log_monitoring 
             WHERE kode_alat = "'.$kode_alat.'" AND
@@ -46,15 +51,18 @@ class MonitoringController extends Controller
             created_at IN ( SELECT MIN(created_at) AS created_at
                           FROM log_monitoring
                           GROUP BY DATE_FORMAT(created_at,"%Y-%m-%d %H:00") + 
-                         INTERVAL (MINUTE(created_at) - MINUTE(created_at) MOD 5) MINUTE ) ORDER BY id DESC');
+                         INTERVAL (MINUTE(created_at) - MINUTE(created_at) MOD '.$rentangWaktu.') MINUTE ) ORDER BY id DESC');
         } else {
+            if ($request->rentang_waktu != null) {
+                $rentangWaktu = $request->rentang_waktu;
+            }
             $data = DB::select('SELECT * 
             FROM log_monitoring 
             WHERE kode_alat = "'.$kode_alat.'" AND
             created_at IN ( SELECT MIN(created_at) AS created_at
                           FROM log_monitoring
                           GROUP BY DATE_FORMAT(created_at,"%Y-%m-%d %H:00") + 
-                         INTERVAL (MINUTE(created_at) - MINUTE(created_at) MOD 5) MINUTE ) ORDER BY id DESC');
+                         INTERVAL (MINUTE(created_at) - MINUTE(created_at) MOD '.$rentangWaktu.') MINUTE ) ORDER BY id DESC');
         }
 
         return Datatables::of($data)

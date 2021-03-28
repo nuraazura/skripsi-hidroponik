@@ -28,6 +28,18 @@
                       <div class="col-md-3">
                           <input type="date" name="tanggal_akhir" id="tanggal-akhir" class="form-control" placeholder="" aria-describedby="helpId">
                       </div>
+
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          {{-- <label for="">Rentang Waktu</label> --}}
+                          <select class="form-control" name="rentang_waktu" id="rentang-waktu">
+                            {{-- <option value="">Pilih Rentang Waktu</option> --}}
+                            <option value="1">1 Menit</option>
+                            <option value="5" selected>5 Menit</option>
+                            <option value="10">10 Menit</option>
+                          </select>
+                        </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -76,6 +88,7 @@
       data: function (d) {
         d.tanggal_mulai =  $('input[name=tanggal_mulai]').val()
         d.tanggal_akhir =  $('input[name=tanggal_akhir]').val()
+        d.rentang_waktu =  $('select[name=rentang_waktu]').val()
       },
       // success: function (data) {
       //   console.log('ajaxdata', data)
@@ -106,6 +119,12 @@
   })
 
   $('#tanggal-akhir').on('change', function (e) {
+    table.draw()
+    e.preventDefault();
+  })
+
+  $('#rentang-waktu').on('change', function (e) {
+    console.log('rentang waktu', $('select[name=rentang_waktu]').val())
     table.draw()
     e.preventDefault();
   })

@@ -213,3 +213,76 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin', 'middleware' => 'auth
         }
         return 'success';
     });
+
+    Route::get('/xyz', function () {
+        $salinData = DB::table('log_monitoring')
+                    ->where('created_at', '>=', '2021-02-25 03:50')
+                    ->where('created_at', '<=', '2021-02-25 22:32')
+                    ->get();
+        
+        foreach ($salinData as $key => $sd) {
+            $newDateCreated = new DateTime($sd->created_at);
+            $modifCreated = $newDateCreated->modify("+2 days");
+            // return $modifCreated->format("Y-m-d H:i:s");
+            DB::table('log_monitoring_xyz')->insert([
+                'kode_alat' => $sd->kode_alat,
+                'kelembapan_air' => $sd->kelembapan_air,
+                'suhu_air' => $sd->suhu_air,
+                'nutrisi_air' => $sd->nutrisi_air,
+                'suhu_udara' => $sd->suhu_udara,
+                'kelembaban_udara' => $sd->kelembaban_udara,
+                'kipas_pendingin' => $sd->kipas_pendingin,
+                'pompa_nutrisi' => $sd->pompa_nutrisi,
+                'pompa_air' => $sd->pompa_air,
+                'pompa_siram' => $sd->pompa_siram,
+                'lampu_led' => $sd->lampu_led,
+                'created_at' => $modifCreated->format("Y-m-d H:i:s"),
+                'updated_at' => $modifCreated->format("Y-m-d H:i:s"),
+            ]);
+        }
+
+        // $datas = DB::table('log_monitoring')->get();
+        // foreach ($datas as $key => $data) {
+        //     DB::table('log_monitoring_xyz')->insert([
+        //         'kode_alat' => $data->kode_alat,
+        //         'kelembapan_air' => $data->kelembapan_air,
+        //         'suhu_air' => $data->suhu_air,
+        //         'nutrisi_air' => $data->nutrisi_air,
+        //         'suhu_udara' => $data->suhu_udara,
+        //         'kelembaban_udara' => $data->kelembaban_udara,
+        //         'kipas_pendingin' => $data->kipas_pendingin,
+        //         'pompa_nutrisi' => $data->pompa_nutrisi,
+        //         'pompa_air' => $data->pompa_air,
+        //         'pompa_siram' => $data->pompa_siram,
+        //         'lampu_led' => $data->lampu_led,
+        //         'created_at' => $data->created_at,
+        //         'updated_at' => $data->updated_at,
+        //     ]);
+        // }
+
+        return 'salin selesai';
+    });
+
+    Route::get('json-xyz', function () {
+        $path = "./log_monitoring_xyz.json";
+        $json = json_decode(file_get_contents($path), true);
+        // return $json[2]['data'];
+
+        foreach ($json[2]['data'] as $key => $val) {
+            DB::table('log_monitoring')->insert([
+                'kode_alat' => $val['kode_alat'],
+                'kelembapan_air' => $val['kelembapan_air'],
+                'suhu_air' => $val['suhu_air'],
+                'nutrisi_air' => $val['nutrisi_air'],
+                'suhu_udara' => $val['suhu_udara'],
+                'kelembaban_udara' => $val['kelembaban_udara'],
+                'kipas_pendingin' => $val['kipas_pendingin'],
+                'pompa_nutrisi' => $val['pompa_nutrisi'],
+                'pompa_air' => $val['pompa_air'],
+                'pompa_siram' => $val['pompa_siram'],
+                'lampu_led' => $val['lampu_led'],
+                'created_at' => $val['created_at'],
+                'updated_at' => $val['updated_at'],
+            ]);
+        }
+    });

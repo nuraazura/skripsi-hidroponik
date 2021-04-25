@@ -193,7 +193,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin', 'middleware' => 'auth
     });
 
     Route::get('salin-data', function () {
-        $datas = DB::table('log_monitoring_backup_server')->where('kode_alat', 'A_3')->orderBy('id', 'asc')->get();
+        $datas = DB::table('log_monitoring_backup')->where('kode_alat', 'A_3')->orderBy('id', 'asc')->get();
         foreach ($datas as $key => $data) {
             DB::table('log_monitoring')->insert([
                 'kode_alat' => $data->kode_alat,
